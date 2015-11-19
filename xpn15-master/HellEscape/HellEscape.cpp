@@ -51,7 +51,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_HELLESCAPE));
 
-	//OgreTest();
+	OgreTest();
 
 	// Main message loop:
 	while (GetMessage(&msg, NULL, 0, 0))
@@ -161,7 +161,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		// TODO: Add any drawing code here...
-		OgreTest();
+		//OgreTest();
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:
@@ -201,9 +201,10 @@ Ogre::String ExePath() {
 }
 
 void OgreTest() {
-	Ogre::Root* mRoot;
-	Ogre::FileSystemLayer* mFSLayer;
-	Ogre::OverlaySystem* mOverlaySystem;
+	Ogre::Root *mRoot;
+	Ogre::Camera *mCamera;
+	Ogre::FileSystemLayer *mFSLayer;
+	Ogre::OverlaySystem *mOverlaySystem;
 	Ogre::String pluginsPath = Ogre::BLANKSTRING;
 	Ogre::SceneManager *mSceneManager;
 
@@ -212,6 +213,8 @@ void OgreTest() {
 	mFSLayer->setHomePath(ExePath());
 
 	pluginsPath = mFSLayer->getConfigFilePath("plugins.cfg");
+
+	//mRoot->initialise(true, "Hell Escape");
 
 	mRoot = OGRE_NEW Ogre::Root(pluginsPath, mFSLayer->getWritablePath("ogre.cfg"),
 		mFSLayer->getWritablePath("ogre.log"));
@@ -222,10 +225,10 @@ void OgreTest() {
 
 	mSceneManager->setAmbientLight(Ogre::ColourValue(0.5, 0.5, 0.5));
 
-	//Ogre::Entity *ogreEntity = mSceneManager->createEntity("GameResources/ninja.mesh", Ogre::SceneManager::PrefabType::PT_CUBE);
-	//Ogre::SceneNode *node = mSceneManager->getRootSceneNode();
-	//
-	//Ogre::Light *light = mSceneManager->createLight("MainLight");
-	//light->setPosition(75.0f, 75.0f, 75.0f);
+	Ogre::Entity *ogreEntity = mSceneManager->createEntity("GameResources/ninja.mesh", Ogre::SceneManager::PrefabType::PT_CUBE);
+	Ogre::SceneNode *node = mSceneManager->getRootSceneNode();
+	
+	Ogre::Light *light = mSceneManager->createLight("MainLight");
+	light->setPosition(75.0f, 75.0f, 75.0f);
 	
 }
